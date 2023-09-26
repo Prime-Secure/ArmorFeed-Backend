@@ -49,7 +49,7 @@ public class SuiteTests2 : IDisposable
   [Fact]
   public void AddVehicle()
   {
-    var licensePlateToCheck = "S2W-454";
+    var licensePlateToCheck = "S2W-455";
     var response = httpClient.GetAsync("/api/v1/vehicles").Result;
     Assert.True(response.IsSuccessStatusCode, "Failed to retrieve the list of vehicles");
     
