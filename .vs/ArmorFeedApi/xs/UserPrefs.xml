@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{3B8DCCD6-C6A7-44FD-B012-F9C85FA3EA74}|Default">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="ArmorFeedTest/VehiclesTest/VehicleTest.cs">
+    <Files>
+      <File FileName="ArmorFeedTest/VehiclesTest/VehiclesServiceTest.feature.cs" Line="1" Column="1" />
+      <File FileName="ArmorFeedTest/VehiclesTest/VehicleTest.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ArmorFeedApi" expanded="True">
+            <Node name="ArmorFeedTest" expanded="True">
+              <Node name="VehiclesTest" expanded="True">
+                <Node name="VehicleTest.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.ArmorFeedApi PreferredExecutionTarget="/Applications/Brave Browser.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+</Properties>
