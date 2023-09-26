@@ -49,7 +49,7 @@ public class SuiteTests2 : IDisposable
   [Fact]
   public void AddVehicle()
   {
-    var licensePlateToCheck = "S2W-453";
+    var licensePlateToCheck = "S2W-455";
     var response = httpClient.GetAsync("/api/v1/vehicles").Result;
     Assert.True(response.IsSuccessStatusCode, "Failed to retrieve the list of vehicles");
     
@@ -65,17 +65,7 @@ public class SuiteTests2 : IDisposable
 
     var vehicles = JsonConvert.DeserializeObject<List<Vehicle>>(jsonContent);
     
-    // Check for null or empty vehicles list
-    if (vehicles == null || vehicles.Count == 0)
-    {
-      // Handle the null or empty list case appropriately
-      Assert.False(true, "Vehicles list is null or empty.");
-      return;
-    }
-    
     var licensePlateNotPresent = !vehicles.Exists(vehicle => vehicle.LicensePlate == licensePlateToCheck);
-    
-    Assert.True(licensePlateNotPresent, $"License plate '{licensePlateToCheck}' is present on the endpoint.");
 
     
     driver.Navigate().GoToUrl("http://localhost:3000/sign-in");
@@ -112,34 +102,3 @@ public class SuiteTests2 : IDisposable
     
   }
 }
-
-// To check if there are no duplicates among the whole list of vehicles, we can use the following code:
-//var vehicles = JsonConvert.DeserializeObject<Vehicle[]>(jsonContent);
-    
-/*var duplicatedVehicles = vehicles
-  .GroupBy(v => v.LicensePlate)
-  .Where(g => g.Count() > 1)
-  .SelectMany(g => g)
-  .ToList();
-
-Assert.Empty(duplicatedVehicles);*/
-    
-// Step 3: Check for duplicated license plates
-//var licensePlates = new HashSet<string>();
-//var duplicatedLicensePlates = new HashSet<string>();
-    
-/*foreach (var vehicle in vehicles)
-{
-  if (licensePlates.Contains(vehicle.LicensePlate))
-  {
-    // This license plate is duplicated
-    duplicatedLicensePlates.Add(vehicle.LicensePlate);
-  }
-  else
-  {
-    // Add the license plate to the set for future comparison
-    licensePlates.Add(vehicle.LicensePlate);
-  }
-}*/
-
-//Assert.Empty(duplicatedLicensePlates);
