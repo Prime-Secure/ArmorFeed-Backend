@@ -22,6 +22,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design.Specification.Tests" Version="2.0.3" />
         <PackageReference Include="Moq" Version="4.20.69" />
         <PackageReference Include="MySql.EntityFrameworkCore" Version="6.0.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="OpenQA.Selenium.Chrome.ChromeDriverExtensions" Version="1.2.0" />
         <PackageReference Include="OpenQA.Selenium.Chrome.Fiddler" Version="1.0.0" />
         <PackageReference Include="OpenQA.Selenium.Winium" Version="1.0.0.4" />

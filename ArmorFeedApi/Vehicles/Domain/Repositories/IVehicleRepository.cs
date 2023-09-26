@@ -12,4 +12,5 @@ public interface IVehicleRepository
     Task<Vehicle> FindByIdAsync(int id);
     void Update(Vehicle vehicle);
     void Remove(Vehicle vehicle);
+    Task<Vehicle> FindByLicensePlateAsync(string licensePlate);
 }

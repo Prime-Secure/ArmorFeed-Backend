@@ -41,6 +41,14 @@ namespace ArmorFeedApi.Vehicles.Services;
             var vehicle = await _vehicleRepository.FindByIdAsync(id);
             return vehicle;
         }
+        
+        public async Task<Vehicle> FindByLicensePlateAsync(string licensePlate)
+        {
+            // Use the _vehicleRepository to find a vehicle by license plate.
+            var vehicle = await _vehicleRepository.FindByLicensePlateAsync(licensePlate);
+
+            return vehicle;
+        }
 
         public async Task<VehicleResponse> SaveAsync(Vehicle vehicle)
         {

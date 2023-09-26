@@ -1,4 +1,14 @@
+using ArmorFeedApi.Enterprises.Domain.Repositories;
+using ArmorFeedApi.Shared.Domain.Repositories;
+using ArmorFeedApi.Vehicles.Domain.Models;
+using ArmorFeedApi.Vehicles.Domain.Repositories;
+using ArmorFeedApi.Vehicles.Persistence.Repositories;
+using ArmorFeedApi.Vehicles.Services;
 using SeleniumExtras.WaitHelpers;
+using Moq;
+using Newtonsoft.Json;
+
+
 
 namespace ArmorFeedTest.VehiclesTest;
 
@@ -14,7 +24,9 @@ using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Interactions;
 using Xunit;
-public class SuiteTests2 : IDisposable {
+public class SuiteTests2 : IDisposable
+{
+  private readonly HttpClient httpClient;
   public IWebDriver driver {get; private set;}
   public IDictionary<String, Object> vars {get; private set;}
   public IJavaScriptExecutor js {get; private set;}
@@ -24,13 +36,35 @@ public class SuiteTests2 : IDisposable {
     driver = new ChromeDriver(chromeDriverService, new ChromeOptions());
     js = (IJavaScriptExecutor)driver;
     vars = new Dictionary<String, Object>();
+    httpClient = new HttpClient
+    {
+      BaseAddress = new Uri("https://localhost:7017")
+    };
   }
   public void Dispose()
   {
     driver.Quit();
+    httpClient.Dispose();
   }
   [Fact]
-  public void AddVehicle() {
+  public void AddVehicle()
+  {
+    var licensePlateToCheck = "S2W-458";
+    var response = httpClient.GetAsync("/api/v1/vehicles").Result;
+    Assert.True(response.IsSuccessStatusCode, "Failed to retrieve the list of vehicles");
+    
+    var jsonContent = response.Content.ReadAsStringAsync().Result;
+    var vehicles = JsonConvert.DeserializeObject<Vehicle[]>(jsonContent);
+    
+    var duplicatedVehicles = vehicles
+      .GroupBy(v => v.LicensePlate)
+      .Where(g => g.Count() > 1)
+      .SelectMany(g => g)
+      .ToList();
+    
+    Assert.NotEmpty(duplicatedVehicles);
+
+    
     driver.Navigate().GoToUrl("http://localhost:3000/sign-in");
     driver.Manage().Window.Size = new System.Drawing.Size(2560, 1340);
     driver.FindElement(By.Id("email")).Click();
@@ -42,11 +76,13 @@ public class SuiteTests2 : IDisposable {
     var elementoMenu = wait.Until(ExpectedConditions.ElementExists(By.LinkText("My Vehicles")));
     elementoMenu.Click();
     driver.FindElement(By.LinkText("My Vehicles")).Click();
+    var elementoMenu2 = wait.Until(ExpectedConditions.ElementExists(By.LinkText("My Vehicles")));
+    elementoMenu2.Click();
     driver.FindElement(By.CssSelector(".p-button-error")).Click();
     driver.FindElement(By.Id("brand")).Click();
     driver.FindElement(By.Id("brand")).SendKeys("Toyota");
     driver.FindElement(By.Id("licensePlate")).Click();
-    driver.FindElement(By.Id("licensePlate")).SendKeys("S2W-456");
+    driver.FindElement(By.Id("licensePlate")).SendKeys(licensePlateToCheck);
     driver.FindElement(By.Id("year")).Click();
     driver.FindElement(By.Id("year")).SendKeys("2021");
     driver.FindElement(By.Id("model")).Click();
@@ -55,6 +91,9 @@ public class SuiteTests2 : IDisposable {
     driver.FindElement(By.CssSelector("tr:nth-child(5) > td:nth-child(2) > span")).Click();
     driver.FindElement(By.CssSelector(".p-placeholder")).Click();
     driver.FindElement(By.CssSelector(".p-dropdown-item:nth-child(2)")).Click();
+    var elementToWaitFor = wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector(".p-dialog-footer > .p-button:nth-child(2)")));
+    elementToWaitFor.Click();
     driver.FindElement(By.CssSelector(".p-dialog-footer > .p-button:nth-child(2)")).Click();
+    
   }
 }

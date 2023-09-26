@@ -46,5 +46,13 @@ public class VehicleRepository: BaseRepository, IVehicleRepository
     {
         _context.Vehicles.Remove(vehicle);
     }
+    
+    public async Task<Vehicle> FindByLicensePlateAsync(string licensePlate)
+    {
+        // Use the _vehicleRepository to find a vehicle by license plate.
+        var vehicle = await _context.Vehicles.FindAsync(licensePlate);
+
+        return vehicle;
+    }
    
 }

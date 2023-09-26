@@ -67,6 +67,8 @@ public class SuiteTests : IDisposable {
     driver.FindElement(By.Id("reference")).Click();
     driver.FindElement(By.Id("reference")).SendKeys("Parque");
     driver.FindElement(By.CssSelector(".p-button-info > .p-button-label")).Click();
+    var elementoMenu3 = wait.Until(ExpectedConditions.ElementExists(By.CssSelector(".p-dropdown-label")));
+    elementoMenu3.Click();
     driver.FindElement(By.CssSelector(".p-dropdown-label")).Click();
     driver.FindElement(By.CssSelector(".p-dropdown-item:nth-child(3)")).Click();
     driver.FindElement(By.Id("address")).Click();
